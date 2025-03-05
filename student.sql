@@ -16,6 +16,60 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `semesters`
+--
+
+DROP TABLE IF EXISTS `semesters`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `semesters` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `semesterName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `year` int DEFAULT '0',
+  `createdDate` datetime NOT NULL,
+  `modifiedDate` datetime NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `semesters`
+--
+
+LOCK TABLES `semesters` WRITE;
+/*!40000 ALTER TABLE `semesters` DISABLE KEYS */;
+INSERT INTO `semesters` VALUES (13,'Kì 1',2025,'2025-03-05 23:09:20','2025-03-05 23:09:20'),(14,'Kì 1',2026,'2025-03-05 23:09:48','2025-03-05 23:09:48');
+/*!40000 ALTER TABLE `semesters` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `semestersubject`
+--
+
+DROP TABLE IF EXISTS `semestersubject`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `semestersubject` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `semesterId` int NOT NULL,
+  `subjectId` int NOT NULL,
+  `createdDate` datetime NOT NULL,
+  `modifiedDate` datetime NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `semestersubject`
+--
+
+LOCK TABLES `semestersubject` WRITE;
+/*!40000 ALTER TABLE `semestersubject` DISABLE KEYS */;
+INSERT INTO `semestersubject` VALUES (8,13,8,'2025-03-05 23:09:23','2025-03-05 23:09:23'),(9,13,9,'2025-03-05 23:09:26','2025-03-05 23:09:26'),(10,14,8,'2025-03-05 23:09:48','2025-03-05 23:09:48'),(11,14,9,'2025-03-05 23:09:48','2025-03-05 23:09:48');
+/*!40000 ALTER TABLE `semestersubject` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `subjects`
 --
 
@@ -86,4 +140,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-05 21:59:21
+-- Dump completed on 2025-03-05 23:11:00
