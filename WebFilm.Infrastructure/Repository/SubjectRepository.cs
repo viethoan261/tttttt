@@ -23,13 +23,13 @@ namespace WebFilm.Infrastructure.Repository
         {
             using (SqlConnection = new MySqlConnection(_connectionString))
             {
-                var sqlCommand = $@"INSERT INTO Subjects (subjectCode, subjectName, creditNumber, desscription, CreatedDate, ModifiedDate)
-                                              VALUES (@v_subjectCode, @v_subjectName, @v_creditNumber, @v_desscription, NOW(), NOW());";
+                var sqlCommand = $@"INSERT INTO Subjects (subjectCode, subjectName, creditNumber, description, CreatedDate, ModifiedDate)
+                                              VALUES (@v_subjectCode, @v_subjectName, @v_creditNumber, @v_description, NOW(), NOW());";
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("v_subjectCode", dto.subjectCode);
                 parameters.Add("v_subjectName", dto.subjectName);
                 parameters.Add("v_creditNumber", dto.creditNumber);
-                parameters.Add("v_desscription", dto.description);
+                parameters.Add("v_description", dto.description);
                 var affectedRows = SqlConnection.Execute(sqlCommand, parameters);
 
                 if (affectedRows > 0)

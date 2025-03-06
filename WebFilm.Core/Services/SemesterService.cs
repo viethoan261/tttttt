@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebFilm.Core.Enitites.Semesters;
+using WebFilm.Core.Enitites.SemesterSubject;
 using WebFilm.Core.Enitites.Subject;
 using WebFilm.Core.Exceptions;
 using WebFilm.Core.Interfaces.Repository;
@@ -16,16 +17,18 @@ namespace WebFilm.Core.Services
     {
         ISemesterRepository _semesterRepository;
         ISemesterSubjectRepository _semesterSubjectRepository;
+        ISubjectRepository _subjectRepository;
         IUserContext _userContext;
         private readonly IConfiguration _configuration;
 
-        public SemesterService(ISemesterRepository semesterRepository, ISemesterSubjectRepository semesterSubjectRepository,
+        public SemesterService(ISemesterRepository semesterRepository, ISemesterSubjectRepository semesterSubjectRepository, ISubjectRepository subjectRepository,
             IConfiguration configuration,
             IUserContext userContext) : base(semesterRepository)
         {
             _configuration = configuration;
             _semesterRepository = semesterRepository;
             _semesterSubjectRepository = semesterSubjectRepository;
+            _subjectRepository = subjectRepository;
             _userContext = userContext;
         }
 
@@ -61,8 +64,30 @@ namespace WebFilm.Core.Services
             throw new NotImplementedException();
         }
 
-        public List<Semesters> findAll()
+        public List<SemesterResponse> findAll()
         {
+            List<SemesterResponse> res = new List<SemesterResponse>();
+
+            List<Semesters> semesters = _semesterRepository.GetAll().ToList();
+
+            foreach (var semester in semesters)
+            {
+                SemesterResponse sr = new SemesterResponse();
+                sr.semesterName = semester.semesterName;
+                sr.year = semester.year;
+
+
+                List<int> semesterSubjectIds = _semesterSubjectRepository.GetAll().Where(t => t.semesterId == semester.id).Select(u => u.subjectId).ToList();
+                List<Subjects> subjects = _subjectRepository.GetAll().Where(t => semesterSubjectIds.Contains(t.id)).ToList();
+
+                sr.subjects = subjects;
+
+                res.Add(sr);
+            }
+
+            return res;
+
+
             throw new NotImplementedException();
         }
     }

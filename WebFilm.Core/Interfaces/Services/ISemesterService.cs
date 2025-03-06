@@ -13,6 +13,6 @@ namespace WebFilm.Core.Interfaces.Services
         bool create(SemesterDTO dto);
         int update(int id, SemesterDTO dto);
         int delete(int id);
-        List<Semesters> findAll();
+        List<SemesterResponse> findAll();
     }
 }

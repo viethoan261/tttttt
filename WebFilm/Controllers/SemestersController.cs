@@ -34,5 +34,19 @@ namespace WebFilm.Controllers
                 return HandleException(ex);
             }
         }
+
+        [HttpGet("")]
+        public IActionResult getAll()
+        {
+            try
+            {
+                var res = _semesterService.findAll();
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
+        }
     }
 }
