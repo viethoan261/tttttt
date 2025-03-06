@@ -29,7 +29,7 @@ namespace WebFilm.Infrastructure.Repository
                 parameters.Add("v_subjectCode", dto.subjectCode);
                 parameters.Add("v_subjectName", dto.subjectName);
                 parameters.Add("v_creditNumber", dto.creditNumber);
-                parameters.Add("v_desscription", dto.desscription);
+                parameters.Add("v_desscription", dto.description);
                 var affectedRows = SqlConnection.Execute(sqlCommand, parameters);
 
                 if (affectedRows > 0)
@@ -52,7 +52,7 @@ namespace WebFilm.Infrastructure.Repository
                 parameters.Add("v_subjectCode", dto.subjectCode);
                 parameters.Add("v_subjectName", dto.subjectName);
                 parameters.Add("v_creditNumber", dto.creditNumber);
-                parameters.Add("v_description", dto.desscription);
+                parameters.Add("v_description", dto.description);
                 parameters.Add("v_id", id);
 
                 var affectedRows = SqlConnection.Execute(sqlCommand, parameters);

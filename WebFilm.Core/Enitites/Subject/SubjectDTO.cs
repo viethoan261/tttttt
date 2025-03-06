@@ -14,6 +14,6 @@ namespace WebFilm.Core.Enitites.Subject
 
         public int creditNumber { get; set; }
 
-        public string desscription { get; set; }
+        public string description { get; set; }
     }
 }
