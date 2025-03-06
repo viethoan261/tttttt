@@ -85,7 +85,7 @@ namespace WebFilm.Core.Services
                 new Claim("id", user.id.ToString()),
                 new Claim("username", user.username),
                 new Claim("Role", user.role),
-                new Claim("fullname", user.fullname ?? ""),
+                new Claim("fullname", user.fullName ?? ""),
                 // Add any other user claims as needed
             };
 

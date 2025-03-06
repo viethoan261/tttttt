@@ -56,7 +56,20 @@ namespace WebFilm.Core.Services
 
         public int update(int id, SemesterDTO dto)
         {
-            throw new NotImplementedException();
+            List<int> semesterSubjectIds = _semesterSubjectRepository.GetAll().Where(t => t.semesterId == id).Select(u => u.id).ToList();
+
+            foreach (int semesterSubjectId in semesterSubjectIds)
+            {
+                _semesterSubjectRepository.Delete(semesterSubjectId);
+            }
+
+            foreach (int subjectId in dto.subjectIds)
+            {
+                _semesterSubjectRepository.create(id, subjectId);
+            }
+
+
+            return _semesterRepository.update(id, dto);
         }
 
         public int delete(int id)
@@ -86,9 +99,6 @@ namespace WebFilm.Core.Services
             }
 
             return res;
-
-
-            throw new NotImplementedException();
         }
     }
 }

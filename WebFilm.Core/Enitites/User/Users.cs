@@ -9,7 +9,7 @@ namespace WebFilm.Core.Enitites.User
         #region Prop
         public string username { get; set; }
 
-        public string? fullname { get; set; }
+        public string? fullName { get; set; }
 
         public string role { get; set; }
 

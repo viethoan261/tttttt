@@ -40,7 +40,18 @@ namespace WebFilm.Infrastructure.Repository
 
         public int update(int id, SemesterDTO dto)
         {
-            throw new NotImplementedException();
+            using (SqlConnection = new MySqlConnection(_connectionString))
+            {
+                var sqlCommand = $@"Update `Semesters` set semesterName = @v_semesterName, year = @v_year, ModifiedDate = NOW() where id = @v_id;";
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("v_semesterName", dto.semesterName);
+                parameters.Add("v_year", dto.year);
+                parameters.Add("v_id", id);
+
+                var affectedRows = SqlConnection.Execute(sqlCommand, parameters);
+
+                return affectedRows;
+            }
         }
     }
 }

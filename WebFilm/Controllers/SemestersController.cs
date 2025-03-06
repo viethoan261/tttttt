@@ -48,5 +48,19 @@ namespace WebFilm.Controllers
                 return HandleException(ex);
             }
         }
+
+        [HttpPut("{id}")]
+        public IActionResult update(int id, SemesterDTO dto)
+        {
+            try
+            {
+                var res = _semesterService.update(id, dto);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
+        }
     }
 }
