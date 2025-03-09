@@ -14,6 +14,7 @@ namespace WebFilm.Core.Enitites.User
         public string role { get; set; }
 
         public string password { get; set; }
+        public string className { get; set; }
         #endregion
     }
 }

@@ -1,4 +1,5 @@
-﻿using WebFilm.Core.Enitites;
+﻿using Microsoft.AspNetCore.Http;
+using WebFilm.Core.Enitites;
 using WebFilm.Core.Enitites.Staff;
 using WebFilm.Core.Enitites.User;
 
@@ -19,5 +20,7 @@ namespace WebFilm.Core.Interfaces.Services
         bool deleteStaff(int id);
 
         List<Users> getAllStaff();
+
+        void importStudent(IFormFile file);
     }
 }

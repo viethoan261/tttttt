@@ -1,13 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json.Linq;
+using OfficeOpenXml;
+using OpenCvSharp;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
-using WebFilm.Core.Enitites;
-using WebFilm.Core.Enitites.Staff;
 using WebFilm.Core.Enitites.User;
 using WebFilm.Core.Exceptions;
 using WebFilm.Core.Interfaces.Repository;
@@ -155,6 +153,79 @@ namespace WebFilm.Core.Services
 
             return profile;
         }
+
+        public void importStudent(IFormFile file)
+        {
+            string role = _userContext.Role;
+            if (!"ADMIN".Equals(role))
+            {
+                throw new ServiceException(Resources.Resource.Not_Permission);
+            }
+
+            if (file == null || file.Length == 0)
+                throw new ServiceException("File is empty");
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // Thêm dòng này
+
+            using (var stream = new MemoryStream())
+            {
+                file.CopyTo(stream);
+                using (var package = new ExcelPackage(stream))
+                {
+                    var worksheet = package.Workbook.Worksheets[0];
+                    int rowCount = worksheet.Dimension.Rows;
+
+                    for (int row = 2; row <= rowCount; row++)
+                    {
+                        UserDTO student = new UserDTO();
+
+                        student.fullName = worksheet.Cells[row, 1].Text;
+                        student.username = worksheet.Cells[row, 2].Text;
+                        student.password = BCrypt.Net.BCrypt.HashPassword(worksheet.Cells[row, 3].Text);
+                        student.role = "STUDENT";
+                        student.className = worksheet.Cells[row, 4].Text;
+
+                        var isDuplicateUsername = _userRepository.CheckDuplicateUsername(student.username);
+                        if (isDuplicateUsername)
+                        {
+                            continue;
+                        }
+
+                        _userRepository.Signup(student);
+                    }
+                }
+            }
+        }
+
+        public byte[] ExportStudent()
+        {
+            string role = _userContext.Role;
+            if (!"ADMIN".Equals(role))
+            {
+                throw new ServiceException(Resources.Resource.Not_Permission);
+            }
+
+            List<Users> students = _userRepository.GetAll().Where(t => t.role.Equals("STUDENT")).ToList();
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Students");
+                worksheet.Cells[1, 1].Value = "Full Name";
+                worksheet.Cells[1, 2].Value = "Username";
+                worksheet.Cells[1, 3].Value = "Password";
+
+                for (int i = 0; i < students.Count; i++)
+                {
+                    worksheet.Cells[i + 2, 1].Value = students[i].fullName;
+                    worksheet.Cells[i + 2, 2].Value = students[i].username;
+                    worksheet.Cells[i + 2, 3].Value = students[i].password;
+                }
+
+                return package.GetAsByteArray();
+            }
+        }
+
         #endregion
     }
 }

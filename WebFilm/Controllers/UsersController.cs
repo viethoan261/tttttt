@@ -115,6 +115,20 @@ namespace WebFilm.Controllers
                 return HandleException(ex);
             }
         }
+
+        [HttpPost("import-students")]
+        public IActionResult importStudent(IFormFile file)
+        {
+            try
+            {
+                 _userService.importStudent(file);
+                return Ok("Import successfully!!");
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
+        }
         #endregion
     }
 }
