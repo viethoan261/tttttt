@@ -18,5 +18,6 @@ namespace WebFilm.Core.Enitites.User
         public string fullName { get; set; }
 
         public string role { get; set; }
+        public String className { get; set; }
     }
 }
