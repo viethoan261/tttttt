@@ -74,7 +74,14 @@ namespace WebFilm.Core.Services
 
         public int delete(int id)
         {
-            throw new NotImplementedException();
+            List<int> semesterSubjectIds = _semesterSubjectRepository.GetAll().Where(t => t.semesterId == id).Select(u => u.id).ToList();
+
+            foreach (int semesterSubjectId in semesterSubjectIds)
+            {
+                _semesterSubjectRepository.Delete(semesterSubjectId);
+            }
+
+            return _semesterRepository.Delete(id);
         }
 
         public List<SemesterResponse> findAll()
