@@ -62,5 +62,19 @@ namespace WebFilm.Controllers
                 return HandleException(ex);
             }
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult delete(int id)
+        {
+            try
+            {
+                var res = _semesterService.delete(id);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
+        }
     }
 }
