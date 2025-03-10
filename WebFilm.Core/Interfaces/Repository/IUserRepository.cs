@@ -18,5 +18,7 @@ namespace WebFilm.Core.Interfaces.Repository
 
         bool CheckDuplicateUsername(string username);
 
+        List<Users> getAllStudents(String className);
+
     }
 }

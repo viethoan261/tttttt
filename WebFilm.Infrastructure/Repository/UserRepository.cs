@@ -129,6 +129,19 @@ namespace WebFilm.Infrastructure.Repository
                 return null;
             }
         }
+
+        public List<Users> getAllStudents(string className)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                var sqlCommand = "SELECT * FROM Users WHERE className = @v_className and role = 'STUDENT'";
+                var parameters = new DynamicParameters();
+                parameters.Add("v_className", className);
+
+                return connection.Query<Users>(sqlCommand, parameters).ToList();
+            }
+        }
+
         #endregion
     }
 }
