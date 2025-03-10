@@ -55,7 +55,7 @@ namespace WebFilm.Core.Services
             switch (fileType)
             {
                 case 1:
-                    return null(className);
+                    return null;
                 case 2:
                     return null;
                 default:
