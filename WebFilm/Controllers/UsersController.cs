@@ -130,7 +130,7 @@ namespace WebFilm.Controllers
             }
         }
 
-        [HttpGet("/students")]
+        [HttpGet("students")]
         public IActionResult getAllStudent(int semesterId, String className)
         {
             try
