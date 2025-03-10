@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Dapper;
+using Microsoft.Extensions.Configuration;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,20 @@ namespace WebFilm.Infrastructure.Repository
     {
         public ScoreRepository(IConfiguration configuration) : base(configuration)
         {
+        }
+
+        public void delete(int semesterId, int studentId)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                var sqlCommand = @"delete from `Scores` where studentId = @v_studentId and semesterId = @v_semesterId;";  // Lấy ID của bản ghi vừa chèn vào
+
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("v_studentId", studentId);
+                parameters.Add("v_semesterId", semesterId);
+
+                SqlConnection.Execute(sqlCommand, parameters);
+            }
         }
     }
 }

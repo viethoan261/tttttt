@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using WebFilm.Core.Enitites.Points;
 using WebFilm.Core.Enitites.Semesters;
 
-namespace WebFilm.Core.Interfaces.Repository
+namespace WebFilm.Core.Interfaces.Services
 {
-    public interface IScoreRepository : IBaseRepository<int, Scores>
+    public interface IScoreService : IBaseService<int, Scores>
     {
-        void delete(int semesterId, int studentId);
+        bool updateScores(int studentId, int semesterId, List<PointRequest> request);
     }
 }
