@@ -9,6 +9,7 @@ namespace WebFilm.Core.Enitites.Semesters
 {
     public class SemesterResponse
     {
+        public int id { get; set; }
         public string semesterName { get; set; }
         public int year { get; set; }
 

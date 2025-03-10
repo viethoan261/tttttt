@@ -95,7 +95,7 @@ namespace WebFilm.Core.Services
                 SemesterResponse sr = new SemesterResponse();
                 sr.semesterName = semester.semesterName;
                 sr.year = semester.year;
-
+                sr.id = semester.id;
 
                 List<int> semesterSubjectIds = _semesterSubjectRepository.GetAll().Where(t => t.semesterId == semester.id).Select(u => u.subjectId).ToList();
                 List<Subjects> subjects = _subjectRepository.GetAll().Where(t => semesterSubjectIds.Contains(t.id)).ToList();
