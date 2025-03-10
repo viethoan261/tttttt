@@ -31,6 +31,7 @@ builder.Services.AddScoped<ISemesterService, SemesterService>();
 
 
 builder.Services.AddScoped<ISemesterSubjectRepository, SemesterSubjectRepository>();
+builder.Services.AddScoped<IScoreRepository, ScoreRepository>();
 
 
 builder.Services.AddHttpContextAccessor();

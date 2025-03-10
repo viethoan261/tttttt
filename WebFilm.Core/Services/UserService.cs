@@ -6,6 +6,7 @@ using OpenCvSharp;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using WebFilm.Core.Enitites.Points;
 using WebFilm.Core.Enitites.User;
 using WebFilm.Core.Exceptions;
 using WebFilm.Core.Interfaces.Repository;
@@ -17,15 +18,21 @@ namespace WebFilm.Core.Services
     {
         IUserRepository _userRepository;
         IUserContext _userContext;
+        ISemesterSubjectRepository _semesterSubjectRepository;
+        IScoreRepository _scoreRepository;
         private readonly IConfiguration _configuration;
 
-        public UserService(IUserRepository userRepository,
+        public UserService(IUserRepository userRepository, 
             IConfiguration configuration,
-            IUserContext userContext) : base(userRepository)
+            IUserContext userContext,
+            ISemesterSubjectRepository semesterSubjectRepository,
+            IScoreRepository scoreRepository) : base(userRepository)
         {
             _configuration = configuration;
             _userRepository = userRepository;
             _userContext = userContext;
+            _semesterSubjectRepository = semesterSubjectRepository;
+            _scoreRepository = scoreRepository;
         }
 
         #region Method
@@ -84,6 +91,7 @@ namespace WebFilm.Core.Services
                 new Claim("username", user.username),
                 new Claim("Role", user.role),
                 new Claim("fullname", user.fullName ?? ""),
+                new Claim("ClassName", user.className ?? ""),
                 // Add any other user claims as needed
             };
 
@@ -224,6 +232,35 @@ namespace WebFilm.Core.Services
 
                 return package.GetAsByteArray();
             }
+        }
+
+        public List<StudentResponse> getAllStudents(int semesterId, string className)
+        {
+            List<StudentResponse> studentResponses = new List<StudentResponse>();
+
+            List<Users> students = _userRepository.GetAll().Where(t => t.className.Equals(className)).ToList();
+
+            foreach (Users user in students)
+            {
+                StudentResponse std = new StudentResponse();
+                std.id = user.id;
+                std.fullName = user.fullName;
+                std.className= user.className;
+
+                List<int> subjectIds = _semesterSubjectRepository.GetAll().Where(t => t.semesterId == semesterId).Select(t => t.subjectId).ToList();
+
+                foreach(int subjectId in subjectIds)
+                {
+                    List<Scores> scores = _scoreRepository.GetAll().Where(t => t.studentId == user.id && t.subjectId == subjectId && t.semesterId == semesterId).ToList();
+
+                    std.scores = scores;
+                }
+
+
+                studentResponses.Add(std);
+            }
+
+            return studentResponses;
         }
 
         #endregion

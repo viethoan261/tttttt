@@ -129,6 +129,20 @@ namespace WebFilm.Controllers
                 return HandleException(ex);
             }
         }
+
+        [HttpGet("/students")]
+        public IActionResult getAllStudent(int semesterId, String className)
+        {
+            try
+            {
+                var res = _userService.getAllStudents(semesterId, className);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
+        }
         #endregion
     }
 }

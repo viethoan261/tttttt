@@ -13,5 +13,7 @@ namespace WebFilm.Core.Interfaces.Services
         string UserName { get; }
         string Role { get; }
         string FullName { get; }
+
+        string ClassName { get; }
     }
 }

@@ -50,6 +50,14 @@ namespace WebFilm.Core.Services
             }
         }
 
+        public string ClassName
+        {
+            get
+            {
+                return GetClaimValue("ClassName");
+            }
+        }
+
         private string GetClaimValue(string claimType)
         {
             var claimsIdentity = _httpContextAccessor.HttpContext?.User?.Identity as ClaimsIdentity;

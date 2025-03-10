@@ -22,5 +22,7 @@ namespace WebFilm.Core.Interfaces.Services
         List<Users> getAllStaff();
 
         void importStudent(IFormFile file);
+
+        List<StudentResponse> getAllStudents(int semesterId, String className);
     }
 }
