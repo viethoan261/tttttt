@@ -142,6 +142,7 @@ CREATE TABLE `users` (
   `modifiedDate` datetime NOT NULL,
   `role` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '_utf8mb4\\''STAFF\\''',
   `fullName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `className` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -152,7 +153,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (2,'admin','$2a$11$ViSrG17kAOOypYWOWykdhunavifCdR6S/cVpu9Q7pV3mVBHmkgC1y','2025-03-05 20:54:20','2025-03-05 20:54:20','ADMIN','Quản trị hệ thống'),(6,'teacher1','$2a$11$T4sbJ34xqlEf19P4sbukneCRJgvg4G0670C0csAAd3.J2hVAaF6ZO','2025-03-05 21:13:39','2025-03-05 21:13:39','TEACHER','Giáo viên 1'),(7,'ducma','$2a$11$WHpgdHbDFy.k7rIpwWB7iOV1GFh4oDf71CWeipyrfVQziEIYVsc5O','2025-03-05 21:14:48','2025-03-05 21:14:48','STUDENT','Màu Anh Đức');
+INSERT INTO `users` VALUES (2,'admin','$2a$11$ViSrG17kAOOypYWOWykdhunavifCdR6S/cVpu9Q7pV3mVBHmkgC1y','2025-03-05 20:54:20','2025-03-05 20:54:20','ADMIN','Quản trị hệ thống',NULL),(6,'teacher1','$2a$11$T4sbJ34xqlEf19P4sbukneCRJgvg4G0670C0csAAd3.J2hVAaF6ZO','2025-03-05 21:13:39','2025-03-05 21:13:39','TEACHER','Giáo viên 1',NULL),(7,'ducma','$2a$11$WHpgdHbDFy.k7rIpwWB7iOV1GFh4oDf71CWeipyrfVQziEIYVsc5O','2025-03-05 21:14:48','2025-03-05 21:14:48','STUDENT','Màu Anh Đức',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -169,4 +170,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-10 21:01:11
+-- Dump completed on 2025-03-10 21:14:22
