@@ -238,7 +238,7 @@ namespace WebFilm.Core.Services
         {
             List<StudentResponse> studentResponses = new List<StudentResponse>();
 
-            List<Users> students = _userRepository.GetAll().Where(t => t.className.Equals(className)).ToList();
+            List<Users> students = _userRepository.GetAll().Where(t => t.className.Equals(className) && t.role.Equals("STUDENT")).ToList();
 
             foreach (Users user in students)
             {
