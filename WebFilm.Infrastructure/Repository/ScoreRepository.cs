@@ -20,7 +20,7 @@ namespace WebFilm.Infrastructure.Repository
 
         public void delete(int semesterId, int studentId)
         {
-            using (var connection = new MySqlConnection(_connectionString))
+            using (SqlConnection = new MySqlConnection(_connectionString))
             {
                 var sqlCommand = @"delete from `Scores` where studentId = @v_studentId and semesterId = @v_semesterId;";  // Lấy ID của bản ghi vừa chèn vào
 
@@ -28,7 +28,7 @@ namespace WebFilm.Infrastructure.Repository
                 parameters.Add("v_studentId", studentId);
                 parameters.Add("v_semesterId", semesterId);
 
-                connection.Execute(sqlCommand, parameters);
+                SqlConnection.Execute(sqlCommand, parameters);
             }
         }
     }
