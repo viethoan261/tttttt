@@ -28,7 +28,7 @@ namespace WebFilm.Infrastructure.Repository
                 parameters.Add("v_studentId", studentId);
                 parameters.Add("v_semesterId", semesterId);
 
-                SqlConnection.Execute(sqlCommand, parameters);
+                connection.Execute(sqlCommand, parameters);
             }
         }
     }

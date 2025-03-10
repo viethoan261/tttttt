@@ -8,6 +8,10 @@ using WebFilm.Core.Interfaces.Repository;
 using WebFilm.Core.Interfaces.Services;
 using ClosedXML.Excel;
 using DocumentFormat.OpenXml.InkML;
+using OpenCvSharp.ImgHash;
+using Syncfusion.XlsIO;
+using Syncfusion.Pdf;
+using Syncfusion.ExcelToPdfConverter;
 
 namespace WebFilm.Core.Services
 {
@@ -36,21 +40,42 @@ namespace WebFilm.Core.Services
 
         public byte[] export(int exportType, int fileType, string className)
         {
-            /*var students = _userRepository.getAllStudents(className);
+            switch (exportType)
+            {
+                case 1:
+                    return exportType1(className, fileType);
 
+                default:
+                    return null;
+            }
+        }
+
+
+        private byte[] exportType1(string className, int fileType)
+        {
+            switch (fileType)
+            {
+                case 1:
+                    return null;
+                case 2:
+                    return null;
+                default:
+                    throw new ArgumentException("Invalid file type");
+            }
+        }
+
+        /*private byte[] ExportToExcel1(string className)
+        {
+            var students = _userRepository.getAllStudents(className);
             using var workbook = new XLWorkbook();
-            int year = DateTime.Today.Year;
-            var semesters = _semesterRepository.GetAll().Where(int year)
 
             foreach (var student in students)
             {
-                var semesters = _sc
                 var semesters = _context.Semesters
                     .Where(s => _context.Scores.Any(sc => sc.StudentId == student.Id && sc.SemesterId == s.Id))
                     .ToList();
 
                 var worksheet = workbook.Worksheets.Add(student.Name);
-
                 int row = 1;
                 worksheet.Cell(row, 1).Value = "Semester";
                 worksheet.Cell(row, 2).Value = "Subject";
@@ -81,9 +106,40 @@ namespace WebFilm.Core.Services
             }
 
             using var stream = new MemoryStream();
-            workbook.SaveAs(stream)
-            return stream.ToArray(); */
-            return null;
+            workbook.SaveAs(stream);
+            return stream.ToArray();
         }
+
+        public byte[] ConvertExcelToPdf(byte[] excelBytes)
+        {
+            // Khởi tạo ứng dụng Excel
+            using (ExcelEngine excelEngine = new ExcelEngine())
+            {
+                IApplication application = excelEngine.Excel;
+                application.DefaultVersion = ExcelVersion.Excel2016;
+
+                // Mở file Excel từ mảng byte
+                using (MemoryStream excelStream = new MemoryStream(excelBytes))
+                {
+                    IWorkbook workbook = application.Workbooks.Open(excelStream);
+
+                    // Khởi tạo ExcelToPdfConverter
+                    ExcelToPdfConverter converter = new ExcelToPdfConverter(workbook);
+
+                    // Chuyển đổi sang PDF
+                    PdfDocument pdfDocument = converter.Convert();
+
+                    // Lưu PDF vào MemoryStream
+                    using (MemoryStream pdfStream = new MemoryStream())
+                    {
+                        pdfDocument.Save(pdfStream);
+                        pdfDocument.Close();
+
+                        // Trả về mảng byte của file PDF
+                        return pdfStream.ToArray();
+                    }
+                }
+            }
+        }*/
     }
 }
