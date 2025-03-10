@@ -16,6 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `scores`
+--
+
+DROP TABLE IF EXISTS `scores`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `scores` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `studentId` int DEFAULT '0',
+  `semesterId` int DEFAULT '0',
+  `subjectId` int DEFAULT '0',
+  `midtermScore` double DEFAULT '0',
+  `finalScore` double DEFAULT '0',
+  `createdDate` datetime NOT NULL,
+  `modifiedDate` datetime NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `scores`
+--
+
+LOCK TABLES `scores` WRITE;
+/*!40000 ALTER TABLE `scores` DISABLE KEYS */;
+/*!40000 ALTER TABLE `scores` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `semesters`
 --
 
@@ -140,4 +169,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-05 23:11:00
+-- Dump completed on 2025-03-10 21:01:11
