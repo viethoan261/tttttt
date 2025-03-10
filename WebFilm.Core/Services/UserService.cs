@@ -7,6 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using WebFilm.Core.Enitites.Points;
+using WebFilm.Core.Enitites.Subject;
 using WebFilm.Core.Enitites.User;
 using WebFilm.Core.Exceptions;
 using WebFilm.Core.Interfaces.Repository;
@@ -249,13 +250,10 @@ namespace WebFilm.Core.Services
 
                 List<int> subjectIds = _semesterSubjectRepository.GetAll().Where(t => t.semesterId == semesterId).Select(t => t.subjectId).ToList();
 
-                foreach(int subjectId in subjectIds)
-                {
-                    List<Scores> scores = _scoreRepository.GetAll().Where(t => t.studentId == user.id && t.subjectId == subjectId && t.semesterId == semesterId).ToList();
 
-                    std.scores = scores;
-                }
+                List<Scores> scores = _scoreRepository.GetAll().Where(t => t.studentId == user.id && subjectIds.Contains(t.subjectId) && t.semesterId == semesterId).ToList();
 
+                std.scores = scores;
 
                 studentResponses.Add(std);
             }

@@ -55,7 +55,7 @@ namespace WebFilm.Core.Services
             switch (fileType)
             {
                 case 1:
-                    return null;
+                    return null(className);
                 case 2:
                     return null;
                 default:
@@ -67,6 +67,9 @@ namespace WebFilm.Core.Services
         {
             var students = _userRepository.getAllStudents(className);
             using var workbook = new XLWorkbook();
+
+            int year = DateTime.Now.Year;
+            var semesters = _semesterRepository.GetAll().Where(t => t.year == year).ToList();
 
             foreach (var student in students)
             {
@@ -107,8 +110,9 @@ namespace WebFilm.Core.Services
             using var stream = new MemoryStream();
             workbook.SaveAs(stream);
             return stream.ToArray();
-        }
+        }*/
 
+        /*
         public byte[] ConvertExcelToPdf(byte[] excelBytes)
         {
             // Khởi tạo ứng dụng Excel
