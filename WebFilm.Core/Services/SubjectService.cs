@@ -52,12 +52,6 @@ namespace WebFilm.Core.Services
 
         public List<Subjects> findAll()
         {
-            string role = _userContext.Role;
-            if (!"ADMIN".Equals(role))
-            {
-                throw new ServiceException(Resources.Resource.Not_Permission);
-            }
-
             return _subjectRepository.GetAll().ToList();
         }
 
